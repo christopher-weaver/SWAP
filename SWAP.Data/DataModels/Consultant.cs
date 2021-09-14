@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SWAP.Data.DataModels.Enumerations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace SWAP.Data
 
         public string Email { get; set; }
 
-        // build enum
-        public string Category { get; set; }
+        [Required]
+        public Category Category { get; set; }
     }
 }

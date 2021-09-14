@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SWAP.Data.DataModels.Enumerations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,16 +14,14 @@ namespace SWAP.Data
         [Required]
         public Guid Id { get; set; }
 
-        // build enums
         [Required]
-        public string Category { get; set; }
+        public Category Category { get; set; }
 
         [Required]
-        public string Subcategory { get; set; }
+        public Subcategory Subcategory { get; set; }
 
         [Required]
-        public string Status { get; set; }
-        //
+        public Status Status { get; set; }
 
         [ForeignKey(nameof(SchoolDistrict))]
         public int DistrictID { get; set; }

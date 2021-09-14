@@ -84,11 +84,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Consultant.cs" />
+    <Compile Include="DataModels\Consultant.cs" />
+    <Compile Include="DataModels\Enumerations\SWAP.DataModels.Enumerations.cs" />
     <Compile Include="IdentityModels.cs" />
-    <Compile Include="Project.cs" />
+    <Compile Include="DataModels\Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SchoolDistrict.cs" />
+    <Compile Include="DataModels\SchoolDistrict.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
