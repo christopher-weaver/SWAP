@@ -18,7 +18,10 @@ namespace SWAP.Data.DataModels.Enumerations
     {
         AssessmentDevelopment = 0,
         CurriculumRefinement,
-        CurriculumMapping,
+        CurriculumMappingELA,
+        CurriculumMappingMath,
+        CurriculumMappingSci,
+        CurriculumMappingSoc,
         SIG1003g,
         MathPerformanceTask,
         MathReasoningPD,
