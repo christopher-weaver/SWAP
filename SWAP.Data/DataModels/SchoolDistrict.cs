@@ -10,6 +10,7 @@ namespace SWAP.Data
 {
     public class SchoolDistrict
     {
+        [Key]
         [Required]
         public Guid Id { get; set; }
 
@@ -24,10 +25,10 @@ namespace SWAP.Data
 
         public string Email { get; set; }
 
-        [ForeignKey(nameof(PointOfContact))]
-        public int ConsultantId { get; set; }
-        // Navigation Property
-        public virtual Consultant PointOfContact { get; set; }
+        //[ForeignKey(nameof(PointOfContact))]
+        //public Guid ConsultantId { get; set; }
+        //// Navigation Property
+        //public virtual Consultant PointOfContact { get; set; }
 
         public List<Project> Projects { get; set; }
     }

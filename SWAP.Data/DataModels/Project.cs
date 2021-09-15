@@ -11,6 +11,7 @@ namespace SWAP.Data
 {
     public class Project
     {
+        [Key]
         [Required]
         public Guid Id { get; set; }
 
@@ -24,11 +25,11 @@ namespace SWAP.Data
         public Status Status { get; set; }
 
         [ForeignKey(nameof(SchoolDistrict))]
-        public int DistrictID { get; set; }
+        public Guid DistrictID { get; set; }
         public virtual SchoolDistrict SchoolDistrict { get; set; }
 
         [ForeignKey(nameof(Consultant))]
-        public int ConsultantId { get; set; }
+        public Guid ConsultantId { get; set; }
         public virtual Consultant Consultant { get; set; }
 
         public DateTime DueDate { get; set; }
