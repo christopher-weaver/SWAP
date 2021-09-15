@@ -25,9 +25,6 @@ namespace SWAP.Data
         [Required]
         public Category Category { get; set; }
 
-        [ForeignKey(nameof(SchoolDistricts))]
-        public List<Guid> SchoolDistrictIds { get; set; }
-        // Navigation Property
         public virtual List<SchoolDistrict> SchoolDistricts { get; set; }
     }
 }
