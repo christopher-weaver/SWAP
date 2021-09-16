@@ -34,5 +34,13 @@ namespace SWAP.API.Controllers
 
             return Ok($"The following project has been added to {project.SchoolDistrict.DistrictName}: {project.Category} {project.Subcategory}");
         }
+
+        [HttpGet]
+        public IHttpActionResult Get()
+        {
+            ProjectService projectService = CreateProjectService();
+            var projects = projectService.GetProjects();
+            return Ok(projects);
+        }
     }
 }
