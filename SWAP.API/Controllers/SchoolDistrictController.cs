@@ -1,7 +1,6 @@
-﻿
+using System;
 using SWAP.Models.SchoolDistrictPOST;
 using SWAP.Services;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -29,7 +28,6 @@ namespace SWAP.API.Controllers
                 return InternalServerError();
 
             return Ok();
-
         }
     }
 }

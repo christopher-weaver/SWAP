@@ -1,17 +1,16 @@
-﻿using SWAP.Data.DataModels.Enumerations;
+﻿using SWAP.Data;
+using SWAP.Data.DataModels.Enumerations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SWAP.Data
+namespace SWAP.Models.Models
 {
-    public class Consultant
+    public class ConsultantCreate
     {
-        [Key]
         [Required]
         public Guid Id { get; set; }
 
@@ -24,7 +23,6 @@ namespace SWAP.Data
 
         [Required]
         public Category Category { get; set; }
-
-        public virtual List<SchoolDistrict> SchoolDistricts { get; set; }
     }
 }
+
