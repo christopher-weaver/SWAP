@@ -28,5 +28,26 @@ namespace SWAP.Services
                 return ctx.SaveChanges() >= 1;
             }
         }
+
+        public IEnumerable<SchoolDistrictItem> GetSchoolDistrict()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                    ctx
+                    .SchoolDistricts
+                    .Select(e =>
+                    new SchoolDistrictItem
+                    {
+                        DistrictName = e.DistrictName,
+                        DistrictContact = e.DistrictContact,
+                        ContactTitle = e.ContactTitle,
+                        Telephone = e.Telephone,
+                        Projects = e.Projects
+                    }
+                );
+                return query.ToArray();
+            }
+        }
     }
 }
