@@ -60,5 +60,23 @@ namespace SWAP.API.Controllers
 
             return Ok();
         }
+
+        [HttpDelete]
+        public IHttpActionResult Delete(ProjectDelete project)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var service = CreateProjectService();
+
+            if (!service.DeleteProject(project))
+            {
+                return InternalServerError();
+            }
+
+            return Ok();
+        }
     }
 }
