@@ -10,9 +10,6 @@ namespace SWAP.Services.Services
 {
     public class ConsultantService
     {
-        public ConsultantService()
-            {
-            }
         public bool CreateConsultant(ConsultantCreate model)
         {
             var newConsultant =
