@@ -54,11 +54,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SchoolDistrictService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SWAP.Data\SWAP.Data.csproj">
+      <Project>{9FEF1F31-3ED3-42C3-90E9-459A96B73C71}</Project>
+      <Name>SWAP.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SWAP.Models\SWAP.Models.csproj">
+      <Project>{E1640E9A-49EE-48CB-809A-CB851D7D38D3}</Project>
+      <Name>SWAP.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

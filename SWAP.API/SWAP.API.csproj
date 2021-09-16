@@ -207,6 +207,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SchoolDistrictController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -276,6 +277,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\SchoolDistrict\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -310,6 +312,14 @@
     <ProjectReference Include="..\SWAP.Data\SWAP.Data.csproj">
       <Project>{9FEF1F31-3ED3-42C3-90E9-459A96B73C71}</Project>
       <Name>SWAP.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SWAP.Models\SWAP.Models.csproj">
+      <Project>{E1640E9A-49EE-48CB-809A-CB851D7D38D3}</Project>
+      <Name>SWAP.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SWAP.Services\SWAP.Services.csproj">
+      <Project>{D28A641F-74AF-4AD7-ACB5-87BAF7C8BE6E}</Project>
+      <Name>SWAP.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

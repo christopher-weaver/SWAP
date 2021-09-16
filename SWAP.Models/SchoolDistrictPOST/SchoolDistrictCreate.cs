@@ -1,13 +1,14 @@
-﻿using System;
+﻿using SWAP.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SWAP.Data.DataModels.SchoolDistrictCRUD
+namespace SWAP.Models.SchoolDistrictPOST
 {
-    public class SchoolDistrictCreate
+   public class SchoolDistrictCreate
     {
         [Required]
         public string DistrictName { get; set; }
