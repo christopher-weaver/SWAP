@@ -62,5 +62,33 @@ namespace SWAP.Services.Services
                 return query.ToArray();
             }
         }
+
+        public bool UpdateProject(ProjectEdit editedProject)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var projectToEdit =
+                    ctx
+                        .Projects
+                        .Single(p => p.Id == editedProject.Id);
+
+                projectToEdit.Category = editedProject.Category;
+                projectToEdit.Subcategory = editedProject.Subcategory;
+                projectToEdit.Consultant = editedProject.Consultant;
+                projectToEdit.Status = editedProject.Status;
+
+                if (editedProject.DueDate != DateTime.MinValue)
+                {
+                    projectToEdit.DueDate = editedProject.DueDate;
+                }
+
+                if (editedProject.Notes != "")
+                {
+                    projectToEdit.Notes = editedProject.Notes;
+                }
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
     }
 }

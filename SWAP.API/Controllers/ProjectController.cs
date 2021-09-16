@@ -42,5 +42,23 @@ namespace SWAP.API.Controllers
             var projects = projectService.GetProjects();
             return Ok(projects);
         }
+
+        [HttpPut]
+        public IHttpActionResult Put(ProjectEdit project)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var service = CreateProjectService();
+
+            if (!service.UpdateProject(project))
+            {
+                return InternalServerError();
+            }
+
+            return Ok();
+        }
     }
 }
