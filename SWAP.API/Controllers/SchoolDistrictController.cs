@@ -29,5 +29,13 @@ namespace SWAP.API.Controllers
 
             return Ok();
         }
+
+        public IHttpActionResult Get()
+        {
+            SchoolDistrictService schoolDistrictService = CreateSchoolDistrictService();
+            var schoolDistrict = schoolDistrictService.GetSchoolDistrict();
+            return Ok(schoolDistrict);
+        }
+
     }
 }
