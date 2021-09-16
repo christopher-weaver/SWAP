@@ -90,5 +90,20 @@ namespace SWAP.Services.Services
                 return ctx.SaveChanges() == 1;
             }
         }
+
+        public bool DeleteProject(ProjectDelete project)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var projectToDelete =
+                    ctx
+                        .Projects
+                        .Single(p => p.Id == project.Id);
+
+                ctx.Projects.Remove(projectToDelete);
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
     }
 }

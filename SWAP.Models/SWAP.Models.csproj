@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="Models\ConsultantCreate.cs" />
     <Compile Include="Models\ProjectCreate.cs" />
+    <Compile Include="Models\ProjectDelete.cs" />
     <Compile Include="Models\ProjectDisplay.cs" />
     <Compile Include="Models\ProjectEdit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
