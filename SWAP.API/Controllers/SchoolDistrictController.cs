@@ -50,5 +50,13 @@ namespace SWAP.API.Controllers
             return Ok();
         }
 
+        public IHttpActionResult Delete(SchoolDistrictDelete id)
+        {
+            var service = CreateSchoolDistrictService();
+            if (!service.DeleteSchoolDistrict(id))
+                return InternalServerError();
+
+            return Ok();
+        }
     }
 }

@@ -68,6 +68,19 @@ namespace SWAP.Services
             }
         }
 
+        public bool DeleteSchoolDistrict(SchoolDistrictDelete district)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var schoolDistrictDelete =
+                    ctx
+                    .SchoolDistricts
+                    .Single(s => s.Id == district.Id);
 
+                ctx.SchoolDistricts.Remove(schoolDistrictDelete);
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
     }
 }
