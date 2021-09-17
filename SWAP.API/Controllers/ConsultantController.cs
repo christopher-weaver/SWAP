@@ -53,6 +53,16 @@ namespace SWAP.API.Controllers
 
             return Ok();
         }
+
+        public IHttpActionResult Delete(Guid id)
+        {
+            var service = CreateConsultantService();
+
+            if (!service.DeleteConsultant(id))
+                return InternalServerError();
+
+            return Ok();
+        }
     }
 
 }

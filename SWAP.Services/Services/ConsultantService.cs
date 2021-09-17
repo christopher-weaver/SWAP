@@ -55,15 +55,29 @@ namespace SWAP.Services.Services
                 var entity =
                     ctx
                         .Consultants
-                        .Single(c => c.Name == model.Name);
- 
+                        .Single(c => c.Id == model.Id);
+
+                entity.Name = model.Name;
                 entity.Phone = model.Phone;
                 entity.Email = model.Email;
                 entity.Category = model.Category;
 
                 return ctx.SaveChanges() == 1;
             }
+        }
 
+        public bool DeleteConsultant(Guid id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Consultants
+                        .Single(c => c.Id == Id);
+                ctx.Consultants.Remove(entity);
+
+                return ctx.SaveChanges() == 1;
+            }
         }
     }
 }
