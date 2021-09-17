@@ -27,5 +27,25 @@ namespace SWAP.Services.Services
                 return ctx.SaveChanges() == 1;
             }
         }
+
+        public IEnumerable<ConsultantListItem> GetConsultants()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                    ctx
+                        .Consultants
+                        .Select(
+                            c =>
+                                new ConsultantListItem
+                                {
+                                    Id = c.Id,
+                                    Name = c.Name,
+                                    Category = c.Category,
+                                }
+                        );
+                return query.ToArray();
+            }
+        }
     }
 }
