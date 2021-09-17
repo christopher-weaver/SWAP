@@ -49,5 +49,25 @@ namespace SWAP.Services
                 return query.ToArray();
             }
         }
+
+        public bool UpdateSchoolDistrict(SchoolDistrictEdit model)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                    .SchoolDistricts
+                    .Single(e => e.Id == model.Id);
+
+                entity.DistrictName = model.DistrictName;
+                entity.DistrictContact = model.DistrictContact;
+                entity.ContactTitle = model.ContactTitle;
+                entity.Email = model.Email;
+
+                return ctx.SaveChanges() >= 1;
+            }
+        }
+
+
     }
 }
