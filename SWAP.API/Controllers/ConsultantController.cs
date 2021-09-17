@@ -33,5 +33,13 @@ namespace SWAP.API.Controllers
             return Ok();
                 
         }
+
+        public IHttpActionResult Get()
+        {
+            ConsultantService consultantService = CreateConsultantService();
+            var consultants = consultantService.GetConsultants();
+            return Ok(consultants);
+        }
     }
+
 }
