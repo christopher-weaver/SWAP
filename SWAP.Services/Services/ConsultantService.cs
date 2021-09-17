@@ -47,5 +47,23 @@ namespace SWAP.Services.Services
                 return query.ToArray();
             }
         }
+
+        public bool UpdateConsultant(ConsultantEdit model)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Consultants
+                        .Single(c => c.Name == model.Name);
+ 
+                entity.Phone = model.Phone;
+                entity.Email = model.Email;
+                entity.Category = model.Category;
+
+                return ctx.SaveChanges() == 1;
+            }
+
+        }
     }
 }

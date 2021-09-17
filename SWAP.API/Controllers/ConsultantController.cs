@@ -40,6 +40,19 @@ namespace SWAP.API.Controllers
             var consultants = consultantService.GetConsultants();
             return Ok(consultants);
         }
+
+        public IHttpActionResult Put(ConsultantEdit consultant)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var service = CreateConsultantService();
+
+            if (!service.UpdateConsultant(consultant))
+                return InternalServerError();
+
+            return Ok();
+        }
     }
 
 }
