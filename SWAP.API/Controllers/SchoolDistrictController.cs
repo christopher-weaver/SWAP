@@ -37,5 +37,18 @@ namespace SWAP.API.Controllers
             return Ok(schoolDistrict);
         }
 
+        public IHttpActionResult Put(SchoolDistrictEdit schoolDistrict)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var service = CreateSchoolDistrictService();
+
+            if (!service.UpdateSchoolDistrict(schoolDistrict))
+                return InternalServerError();
+
+            return Ok();
+        }
+
     }
 }
