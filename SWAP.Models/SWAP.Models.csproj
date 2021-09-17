@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\ConsultantCreate.cs" />
+    <Compile Include="Models\ConsultantDelete.cs" />
     <Compile Include="Models\ConsultantEdit.cs" />
     <Compile Include="Models\ConsultantListItem.cs" />
     <Compile Include="Models\ProjectCreate.cs" />

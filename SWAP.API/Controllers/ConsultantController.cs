@@ -54,11 +54,14 @@ namespace SWAP.API.Controllers
             return Ok();
         }
 
-        public IHttpActionResult Delete(Guid id)
+        public IHttpActionResult Delete(ConsultantDelete consultant)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var service = CreateConsultantService();
 
-            if (!service.DeleteConsultant(id))
+            if (!service.DeleteConsultant(consultant))
                 return InternalServerError();
 
             return Ok();

@@ -66,14 +66,14 @@ namespace SWAP.Services.Services
             }
         }
 
-        public bool DeleteConsultant(Guid id)
+        public bool DeleteConsultant(ConsultantDelete consultant)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity =
                     ctx
                         .Consultants
-                        .Single(c => c.Id == Id);
+                        .Single(c => c.Id == consultant.Id);
                 ctx.Consultants.Remove(entity);
 
                 return ctx.SaveChanges() == 1;
