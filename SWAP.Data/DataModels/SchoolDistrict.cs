@@ -31,5 +31,10 @@ namespace SWAP.Data
         //public virtual Consultant PointOfContact { get; set; }
 
         public List<Project> Projects { get; set; }
+
+        public SchoolDistrict()
+        {
+            Id = Guid.NewGuid();
+        }
     }
 }

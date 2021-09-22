@@ -22,7 +22,7 @@ namespace SWAP.API.Controllers
         
         public IHttpActionResult Post(ConsultantCreate consultant)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var service = CreateConsultantService();

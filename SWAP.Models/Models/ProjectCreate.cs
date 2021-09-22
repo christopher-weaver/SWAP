@@ -21,10 +21,10 @@ namespace SWAP.Models.Models
         public Status Status { get; set; }
 
         [Required]
-        public SchoolDistrict SchoolDistrict { get; set; }
+        public Guid SchoolDistrictId { get; set; }
 
         [Required]
-        public Consultant Consultant { get; set; }
+        public Guid ConsultantId { get; set; }
 
         public DateTime DueDate { get; set; }
 

@@ -13,8 +13,8 @@ namespace SWAP.API.Controllers
     {
         private ProjectService CreateProjectService()
         {
-            var shoppingListService = new ProjectService();
-            return shoppingListService;
+            var projectService = new ProjectService();
+            return projectService;
         }
 
         [HttpPost]
@@ -32,7 +32,7 @@ namespace SWAP.API.Controllers
                 return InternalServerError();
             }
 
-            return Ok($"The following project has been added to {project.SchoolDistrict.DistrictName}: {project.Category} {project.Subcategory}");
+            return Ok($"The following project has been added: {project.Category} {project.Subcategory}");
         }
 
         [HttpGet]

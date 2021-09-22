@@ -1,5 +1,6 @@
 ﻿using SWAP.Data;
 using SWAP.Models.Models;
+using SWAP.Models.SchoolDistrictPOST;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,16 +16,29 @@ namespace SWAP.Services.Services
             var newConsultant =
                 new Consultant()
                 {
-                    Id = model.Id,
                     Name = model.Name,
                     Phone = model.Phone,
                     Email = model.Email,
+                    Category = model.Category
                 };
 
             using (var ctx = new ApplicationDbContext())
             {
+                foreach (Guid guid in model.SchoolDistrictIds)
+                {
+                    var query =
+                        ctx
+                            .SchoolDistricts
+                            .SingleOrDefault(d => d.Id == guid);
+
+                    if (query != null)
+                    {
+                        newConsultant.SchoolDistricts.Add(query);
+                    }
+                }
+
                 ctx.Consultants.Add(newConsultant);
-                return ctx.SaveChanges() == 1;
+                return ctx.SaveChanges() >= 1;
             }
         }
 
@@ -41,10 +55,24 @@ namespace SWAP.Services.Services
                                 {
                                     Id = c.Id,
                                     Name = c.Name,
-                                    Category = c.Category,
+                                    Phone = c.Phone,
+                                    Email = c.Email,
+                                    Category = c.Category.ToString(),
+                                    SchoolDistricts = c.SchoolDistricts
+                                                       .Select(d =>
+                                                                    new SchoolDistrictItem
+                                                                    {
+                                                                        Id = d.Id,
+                                                                        DistrictName = d.DistrictName,
+                                                                        DistrictContact = d.DistrictContact,
+                                                                        ContactTitle = d.ContactTitle,
+                                                                        Email = d.Email,
+                                                                        Telephone = d.Telephone
+                                                                    }).ToList()
                                 }
                         );
-                return query.ToArray();
+
+                return query.ToList();
             }
         }
 
@@ -55,14 +83,32 @@ namespace SWAP.Services.Services
                 var entity =
                     ctx
                         .Consultants
-                        .Single(c => c.Id == model.Id);
+                        .SingleOrDefault(c => c.Id == model.Id);
 
                 entity.Name = model.Name;
                 entity.Phone = model.Phone;
                 entity.Email = model.Email;
                 entity.Category = model.Category;
 
-                return ctx.SaveChanges() == 1;
+                for(var distIndex = 0; distIndex < entity.SchoolDistricts.Count; distIndex++)
+                {
+                    entity.SchoolDistricts.Remove(entity.SchoolDistricts[distIndex]);
+                }
+
+                foreach (Guid guid in model.SchoolDistrictIds)
+                {
+                    var query =
+                        ctx
+                            .SchoolDistricts
+                            .SingleOrDefault(d => d.Id == guid);
+
+                    if (query != null)
+                    {
+                        entity.SchoolDistricts.Add(query);
+                    }
+                }
+
+                return ctx.SaveChanges() >= 1;
             }
         }
 
@@ -73,7 +119,7 @@ namespace SWAP.Services.Services
                 var entity =
                     ctx
                         .Consultants
-                        .Single(c => c.Id == consultant.Id);
+                        .SingleOrDefault(c => c.Id == consultant.Id);
                 ctx.Consultants.Remove(entity);
 
                 return ctx.SaveChanges() == 1;

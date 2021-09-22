@@ -33,7 +33,7 @@ namespace SWAP.API.Controllers
         public IHttpActionResult Get()
         {
             SchoolDistrictService schoolDistrictService = CreateSchoolDistrictService();
-            var schoolDistrict = schoolDistrictService.GetSchoolDistrict();
+            var schoolDistrict = schoolDistrictService.GetAllSchoolDistricts();
             return Ok(schoolDistrict);
         }
 
