@@ -35,5 +35,10 @@ namespace SWAP.Data
         public DateTime DueDate { get; set; }
 
         public string Notes { get; set; }
+
+        public Project()
+        {
+            Id = Guid.NewGuid();
+        }
     }
 }

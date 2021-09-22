@@ -9,6 +9,8 @@ namespace SWAP.Models.SchoolDistrictPOST
 {
    public class SchoolDistrictItem
     {
+        public Guid Id { get; set; }
+
         public string DistrictName { get; set; }
 
         public string DistrictContact { get; set; }
@@ -16,6 +18,8 @@ namespace SWAP.Models.SchoolDistrictPOST
         public string ContactTitle { get; set; }
 
         public string Telephone { get; set; }
+
+        public string Email { get; set; }
 
         public List<Project> Projects { get; set; }
     }

@@ -12,9 +12,6 @@ namespace SWAP.Models.Models
     public class ConsultantCreate
     {
         [Required]
-        public Guid Id { get; set; }
-
-        [Required]
         public string Name { get; set; }
 
         public string Phone { get; set; }
@@ -22,6 +19,7 @@ namespace SWAP.Models.Models
         public string Email { get; set; }
 
         [Required]
+        [Range(0,3)]
         public Category Category { get; set; }
     }
 }

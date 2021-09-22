@@ -26,5 +26,10 @@ namespace SWAP.Data
         public Category Category { get; set; }
 
         public virtual List<SchoolDistrict> SchoolDistricts { get; set; }
+
+        public Consultant()
+        {
+            Id = Guid.NewGuid();
+        }
     }
 }

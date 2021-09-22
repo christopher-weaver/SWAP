@@ -13,8 +13,8 @@ namespace SWAP.API.Controllers
     {
         private ProjectService CreateProjectService()
         {
-            var shoppingListService = new ProjectService();
-            return shoppingListService;
+            var projectService = new ProjectService();
+            return projectService;
         }
 
         [HttpPost]

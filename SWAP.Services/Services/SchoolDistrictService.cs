@@ -29,7 +29,7 @@ namespace SWAP.Services
             }
         }
 
-        public IEnumerable<SchoolDistrictItem> GetSchoolDistrict()
+        public IEnumerable<SchoolDistrictItem> GetAllSchoolDistricts()
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -39,16 +39,39 @@ namespace SWAP.Services
                     .Select(e =>
                     new SchoolDistrictItem
                     {
+                        Id = e.Id,
                         DistrictName = e.DistrictName,
                         DistrictContact = e.DistrictContact,
                         ContactTitle = e.ContactTitle,
                         Telephone = e.Telephone,
+                        Email = e.Email,
                         Projects = e.Projects
                     }
                 );
                 return query.ToArray();
             }
         }
+
+        //public SchoolDistrictItem GetSchoolDistrict(Guid guid)
+        //{
+        //    using (var ctx = new ApplicationDbContext())
+        //    {
+        //        var query =
+        //            ctx
+        //            .SchoolDistricts
+        //            .SingleOrDefault(e => e.Id == guid);
+        //        return new SchoolDistrictItem
+        //        {
+        //            Id = query.Id,
+        //            DistrictName = query.DistrictName,
+        //            DistrictContact = query.DistrictContact,
+        //            ContactTitle = query.ContactTitle,
+        //            Telephone = query.Telephone,
+        //            Email = query.Email,
+        //            Projects = query.Projects
+        //        };
+        //    }
+        //}
 
         public bool UpdateSchoolDistrict(SchoolDistrictEdit model)
         {
@@ -57,11 +80,12 @@ namespace SWAP.Services
                 var entity =
                     ctx
                     .SchoolDistricts
-                    .Single(e => e.Id == model.Id);
+                    .SingleOrDefault(e => e.Id == model.Id);
 
                 entity.DistrictName = model.DistrictName;
                 entity.DistrictContact = model.DistrictContact;
                 entity.ContactTitle = model.ContactTitle;
+                entity.Telephone = model.Telephone;
                 entity.Email = model.Email;
 
                 return ctx.SaveChanges() >= 1;
@@ -75,7 +99,7 @@ namespace SWAP.Services
                 var schoolDistrictDelete =
                     ctx
                     .SchoolDistricts
-                    .Single(s => s.Id == district.Id);
+                    .SingleOrDefault(s => s.Id == district.Id);
 
                 ctx.SchoolDistricts.Remove(schoolDistrictDelete);
 

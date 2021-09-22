@@ -1,4 +1,5 @@
 ﻿using SWAP.Data.DataModels.Enumerations;
+using SWAP.Models.SchoolDistrictPOST;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -19,6 +20,8 @@ namespace SWAP.Models.Models
 
         public string Email { get; set; }
 
-        public Category Category { get; set; }
+        public string Category { get; set; }
+
+        public List<SchoolDistrictItem> SchoolDistricts { get; set; }
     }
 }
