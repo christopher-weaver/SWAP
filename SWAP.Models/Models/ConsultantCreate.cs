@@ -21,6 +21,8 @@ namespace SWAP.Models.Models
         [Required]
         [Range(0,3)]
         public Category Category { get; set; }
+
+        public List<Guid> SchoolDistrictIds { get; set; }
     }
 }
 

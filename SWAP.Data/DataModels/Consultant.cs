@@ -25,7 +25,7 @@ namespace SWAP.Data
         [Required]
         public Category Category { get; set; }
 
-        public virtual List<SchoolDistrict> SchoolDistricts { get; set; }
+        public virtual List<SchoolDistrict> SchoolDistricts { get; set; } = new List<SchoolDistrict>();
 
         public Consultant()
         {

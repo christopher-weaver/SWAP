@@ -24,7 +24,7 @@ namespace SWAP.Models.Models
         public Status Status { get; set; }
 
         [Required]
-        public Consultant Consultant { get; set; }
+        public Guid ConsultantId { get; set; }
 
         public DateTime DueDate { get; set; }
 

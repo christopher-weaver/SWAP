@@ -32,7 +32,7 @@ namespace SWAP.API.Controllers
                 return InternalServerError();
             }
 
-            return Ok($"The following project has been added to {project.SchoolDistrict.DistrictName}: {project.Category} {project.Subcategory}");
+            return Ok($"The following project has been added: {project.Category} {project.Subcategory}");
         }
 
         [HttpGet]

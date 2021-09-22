@@ -24,8 +24,21 @@ namespace SWAP.Services.Services
 
             using (var ctx = new ApplicationDbContext())
             {
+                foreach (Guid guid in model.SchoolDistrictIds)
+                {
+                    var query =
+                        ctx
+                            .SchoolDistricts
+                            .SingleOrDefault(d => d.Id == guid);
+
+                    if (query != null)
+                    {
+                        newConsultant.SchoolDistricts.Add(query);
+                    }
+                }
+
                 ctx.Consultants.Add(newConsultant);
-                return ctx.SaveChanges() == 1;
+                return ctx.SaveChanges() >= 1;
             }
         }
 
@@ -70,12 +83,17 @@ namespace SWAP.Services.Services
                 var entity =
                     ctx
                         .Consultants
-                        .Single(c => c.Id == model.Id);
+                        .SingleOrDefault(c => c.Id == model.Id);
 
                 entity.Name = model.Name;
                 entity.Phone = model.Phone;
                 entity.Email = model.Email;
                 entity.Category = model.Category;
+
+                for(var distIndex = 0; distIndex < entity.SchoolDistricts.Count; distIndex++)
+                {
+                    entity.SchoolDistricts.Remove(entity.SchoolDistricts[distIndex]);
+                }
 
                 foreach (Guid guid in model.SchoolDistrictIds)
                 {
@@ -90,7 +108,6 @@ namespace SWAP.Services.Services
                     }
                 }
 
-
                 return ctx.SaveChanges() >= 1;
             }
         }
@@ -102,7 +119,7 @@ namespace SWAP.Services.Services
                 var entity =
                     ctx
                         .Consultants
-                        .Single(c => c.Id == consultant.Id);
+                        .SingleOrDefault(c => c.Id == consultant.Id);
                 ctx.Consultants.Remove(entity);
 
                 return ctx.SaveChanges() == 1;

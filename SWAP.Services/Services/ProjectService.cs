@@ -1,5 +1,6 @@
 ﻿using SWAP.Data;
 using SWAP.Models.Models;
+using SWAP.Models.SchoolDistrictPOST;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,8 +22,6 @@ namespace SWAP.Services.Services
                 {
                     Category = model.Category,
                     Subcategory = model.Subcategory,
-                    SchoolDistrict = model.SchoolDistrict,
-                    Consultant = model.Consultant,
                     Status = model.Status
                 };
 
@@ -38,8 +37,28 @@ namespace SWAP.Services.Services
 
             using (var ctx = new ApplicationDbContext())
             {
+                var distQuery =
+                        ctx
+                            .SchoolDistricts
+                            .SingleOrDefault(d => d.Id == model.SchoolDistrictId);
+
+                if (distQuery != null)
+                {
+                    newProject.SchoolDistrict = distQuery;
+                }
+
+                var consQuery =
+                        ctx
+                            .Consultants
+                            .SingleOrDefault(d => d.Id == model.ConsultantId);
+
+                if (consQuery != null)
+                {
+                    newProject.Consultant = consQuery;
+                }
+
                 ctx.Projects.Add(newProject);
-                return ctx.SaveChanges() == 1;
+                return ctx.SaveChanges() >= 1;
             }
         }
 
@@ -47,17 +66,53 @@ namespace SWAP.Services.Services
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var query = ctx.Projects
-                               .Select(p => new ProjectDisplay
-                               {
-                                   Category = p.Category,
-                                   Subcategory = p.Subcategory,
-                                   Status = p.Status,
-                                   SchoolDistrict = p.SchoolDistrict,
-                                   Consultant = p.Consultant,
-                                   DueDate = p.DueDate,
-                                   Notes = p.Notes
-                               });
+                var query =
+                    ctx
+                        .Projects
+                        .Select(
+                            p => new ProjectDisplay
+                            {
+                                Id = p.Id,
+                                Category = p.Category.ToString(),
+                                Subcategory = p.Subcategory.ToString(),
+                                Status = p.Status.ToString(),
+                                DueDate = p.DueDate,
+                                Notes = p.Notes,
+                                SchoolDistrict = ctx.SchoolDistricts
+                                                    .Where(d => d.Id == p.SchoolDistrict.Id)
+                                                    .Select(d =>
+                                                                new SchoolDistrictItem
+                                                                {
+                                                                    Id = d.Id,
+                                                                    DistrictName = d.DistrictName,
+                                                                    DistrictContact = d.DistrictContact,
+                                                                    ContactTitle = d.ContactTitle,
+                                                                    Email = d.Email,
+                                                                    Telephone = d.Telephone
+                                                                }).FirstOrDefault(),
+                                Consultant = ctx.Consultants
+                                                    .Where(c => c.Id == p.Consultant.Id)
+                                                    .Select(c =>
+                                                                new ConsultantListItem
+                                                                {
+                                                                    Id = c.Id,
+                                                                    Name = c.Name,
+                                                                    Category = c.Category.ToString(),
+                                                                    Phone = c.Phone,
+                                                                    Email = c.Email,
+                                                                    SchoolDistricts = c.SchoolDistricts
+                                                                                       .Select(d =>
+                                                                                                    new SchoolDistrictItem
+                                                                                                    {
+                                                                                                        Id = d.Id,
+                                                                                                        DistrictName = d.DistrictName,
+                                                                                                        DistrictContact = d.DistrictContact,
+                                                                                                        ContactTitle = d.ContactTitle,
+                                                                                                        Email = d.Email,
+                                                                                                        Telephone = d.Telephone
+                                                                                                    }).ToList()
+                                                                }).FirstOrDefault()
+                            });
 
                 return query.ToArray();
             }
@@ -70,12 +125,21 @@ namespace SWAP.Services.Services
                 var projectToEdit =
                     ctx
                         .Projects
-                        .Single(p => p.Id == editedProject.Id);
+                        .SingleOrDefault(p => p.Id == editedProject.Id);
 
                 projectToEdit.Category = editedProject.Category;
                 projectToEdit.Subcategory = editedProject.Subcategory;
-                projectToEdit.Consultant = editedProject.Consultant;
                 projectToEdit.Status = editedProject.Status;
+
+                var query =
+                        ctx
+                            .Consultants
+                            .SingleOrDefault(c => c.Id == editedProject.ConsultantId);
+
+                if (query != null)
+                {
+                    projectToEdit.Consultant = query;
+                }
 
                 if (editedProject.DueDate != DateTime.MinValue)
                 {
@@ -98,7 +162,7 @@ namespace SWAP.Services.Services
                 var projectToDelete =
                     ctx
                         .Projects
-                        .Single(p => p.Id == project.Id);
+                        .SingleOrDefault(p => p.Id == project.Id);
 
                 ctx.Projects.Remove(projectToDelete);
 
