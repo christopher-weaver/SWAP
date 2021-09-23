@@ -67,7 +67,29 @@ namespace SWAP.Services.Services
                                                                         DistrictContact = d.DistrictContact,
                                                                         ContactTitle = d.ContactTitle,
                                                                         Email = d.Email,
-                                                                        Telephone = d.Telephone
+                                                                        Telephone = d.Telephone,
+                                                                        Projects = d.Projects
+                                                                                    .Select(p =>
+                                                                                                 new ProjectDisplay_brief
+                                                                                                 {
+                                                                                                    Id = p.Id,
+                                                                                                    Category = p.Category.ToString(),
+                                                                                                    Subcategory = p.Subcategory.ToString(),
+                                                                                                    Consultant = ctx.Consultants
+                                                                                                                    .Where(x => x.Id == p.Consultant.Id)
+                                                                                                                    .Select(x =>
+                                                                                                                                new ConsultantListItem_brief
+                                                                                                                                {
+                                                                                                                                    Id = x.Id,
+                                                                                                                                    Name = x.Name,
+                                                                                                                                    Category = x.Category.ToString(),
+                                                                                                                                    Phone = x.Phone,
+                                                                                                                                    Email = x.Email,
+                                                                                                                                }).FirstOrDefault(),
+                                                                                                    Status = p.Status.ToString(),
+                                                                                                    DueDate = p.DueDate,
+                                                                                                    Notes = p.Notes
+                                                                                                }).ToList()
                                                                     }).ToList()
                                 }
                         );
@@ -116,13 +138,39 @@ namespace SWAP.Services.Services
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var entity =
+                var consultantProjects =
+                    ctx
+                        .Projects
+                        .Where(p => p.ConsultantId == consultant.IdToDelete)
+                        .ToList();
+
+                for (var i = 0; i < consultantProjects.Count(); i++)
+                {
+                    consultantProjects[i].ConsultantId = consultant.IdToReplace;
+                }
+
+                var consultantToDelete =
                     ctx
                         .Consultants
-                        .SingleOrDefault(c => c.Id == consultant.Id);
-                ctx.Consultants.Remove(entity);
+                        .SingleOrDefault(c => c.Id == consultant.IdToDelete);
 
-                return ctx.SaveChanges() == 1;
+                var consultantForReplace =
+                    ctx
+                        .Consultants
+                        .SingleOrDefault(c => c.Id == consultant.IdToReplace);
+
+                var consultantDistricts = consultantToDelete.SchoolDistricts;
+
+                foreach (var district in consultantDistricts)
+                {
+                    consultantForReplace.SchoolDistricts.Add(district);
+                }
+
+                consultantToDelete.SchoolDistricts.Clear();
+
+                ctx.Consultants.Remove(consultantToDelete);
+
+                return ctx.SaveChanges() >= 1;
             }
         }
     }

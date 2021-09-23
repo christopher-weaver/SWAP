@@ -1,5 +1,6 @@
 ﻿using SWAP.Data;
 using SWAP.Data.DataModels;
+using SWAP.Models.Models;
 using SWAP.Models.SchoolDistrictPOST;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,27 @@ namespace SWAP.Services
                         Telephone = e.Telephone,
                         Email = e.Email,
                         Projects = e.Projects
+                                    .Select(p =>
+                                                new ProjectDisplay_brief
+                                                {
+                                                    Id = p.Id,
+                                                    Category = p.Category.ToString(),
+                                                    Subcategory = p.Subcategory.ToString(),
+                                                    Consultant = ctx.Consultants
+                                                                    .Where(c => c.Id == p.Consultant.Id)
+                                                                    .Select(c =>
+                                                                                new ConsultantListItem_brief
+                                                                                {
+                                                                                    Id = c.Id,
+                                                                                    Name = c.Name,
+                                                                                    Category = c.Category.ToString(),
+                                                                                    Phone = c.Phone,
+                                                                                    Email = c.Email,
+                                                                                }).FirstOrDefault(),
+                                                    Status = p.Status.ToString(),
+                                                    DueDate = p.DueDate,
+                                                    Notes = p.Notes                                                    
+                                                }).ToList()
                     }
                 );
                 return query.ToArray();
@@ -103,7 +125,7 @@ namespace SWAP.Services
 
                 ctx.SchoolDistricts.Remove(schoolDistrictDelete);
 
-                return ctx.SaveChanges() == 1;
+                return ctx.SaveChanges() >= 1;
             }
         }
     }

@@ -54,15 +54,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\ConsultantCreate.cs" />
-    <Compile Include="Models\ConsultantDelete.cs" />
-    <Compile Include="Models\ConsultantEdit.cs" />
-    <Compile Include="Models\ConsultantListItem.cs" />
-    <Compile Include="Models\ProjectCreate.cs" />
-    <Compile Include="Models\ProjectDelete.cs" />
-    <Compile Include="Models\ProjectDisplay.cs" />
-    <Compile Include="Models\ProjectEdit.cs" />
+    <Compile Include="ConsultantModels\ConsultantCreate.cs" />
+    <Compile Include="ConsultantModels\ConsultantDelete.cs" />
+    <Compile Include="ConsultantModels\ConsultantEdit.cs" />
+    <Compile Include="ConsultantModels\ConsultantListItem.cs" />
+    <Compile Include="ProjectModels\ProjectCreate.cs" />
+    <Compile Include="ProjectModels\ProjectDelete.cs" />
+    <Compile Include="ProjectModels\ProjectDisplay.cs" />
+    <Compile Include="ProjectModels\ProjectEdit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SchoolDistrictModels\ConsultantListItem_brief.cs" />
+    <Compile Include="SchoolDistrictModels\ProjectDisplay_brief.cs" />
     <Compile Include="SchoolDistrictModels\SchoolDistrictDelete.cs" />
     <Compile Include="SchoolDistrictModels\SchoolDistrictEdit.cs" />
     <Compile Include="SchoolDistrictModels\SchoolDistrictItem.cs" />

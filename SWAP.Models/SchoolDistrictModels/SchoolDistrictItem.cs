@@ -1,4 +1,5 @@
 ﻿using SWAP.Data;
+using SWAP.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,6 @@ namespace SWAP.Models.SchoolDistrictPOST
 
         public string Email { get; set; }
 
-        public List<Project> Projects { get; set; }
+        public List<ProjectDisplay_brief> Projects { get; set; }
     }
 }
