@@ -37,6 +37,14 @@ namespace SWAP.API.Controllers
             return Ok(schoolDistrict);
         }
 
+        [Route("api/SchoolDistrict/{districtId}")]
+        public IHttpActionResult Get([FromUri] Guid districtId)
+        {
+            SchoolDistrictService schoolDistrictService = CreateSchoolDistrictService();
+            var schoolDistrict = schoolDistrictService.GetSchoolDistrict(districtId);
+            return Ok(schoolDistrict);
+        }
+
         public IHttpActionResult Put(SchoolDistrictEdit schoolDistrict)
         {
             if (!ModelState.IsValid)

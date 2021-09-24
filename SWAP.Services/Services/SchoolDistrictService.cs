@@ -67,9 +67,78 @@ namespace SWAP.Services
                                                     Status = p.Status.ToString(),
                                                     DueDate = p.DueDate,
                                                     Notes = p.Notes                                                    
-                                                }).ToList()
+                                                }).ToList(),
+                        PointOfContact = ctx.Consultants
+                                            .Where(c => c.SchoolDistricts.Contains(e))
+                                            .Select(c =>
+                                                        new ConsultantListItem_brief
+                                                        {
+                                                            Id = c.Id,
+                                                            Name = c.Name,
+                                                            Category = c.Category.ToString(),
+                                                            Phone = c.Phone,
+                                                            Email = c.Email,
+                                                        }).FirstOrDefault(),
                     }
                 );
+
+                return query.ToArray();
+            }
+        }
+
+        public IEnumerable<SchoolDistrictItem> GetSchoolDistrict(Guid districtId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                    ctx
+                    .SchoolDistricts
+                    .Where(e => e.Id == districtId)
+                    .Select(e =>
+                    new SchoolDistrictItem
+                    {
+                        Id = e.Id,
+                        DistrictName = e.DistrictName,
+                        DistrictContact = e.DistrictContact,
+                        ContactTitle = e.ContactTitle,
+                        Telephone = e.Telephone,
+                        Email = e.Email,
+                        Projects = e.Projects
+                                    .Select(p =>
+                                                new ProjectDisplay_brief
+                                                {
+                                                    Id = p.Id,
+                                                    Category = p.Category.ToString(),
+                                                    Subcategory = p.Subcategory.ToString(),
+                                                    Consultant = ctx.Consultants
+                                                                    .Where(c => c.Id == p.Consultant.Id)
+                                                                    .Select(c =>
+                                                                                new ConsultantListItem_brief
+                                                                                {
+                                                                                    Id = c.Id,
+                                                                                    Name = c.Name,
+                                                                                    Category = c.Category.ToString(),
+                                                                                    Phone = c.Phone,
+                                                                                    Email = c.Email,
+                                                                                }).FirstOrDefault(),
+                                                    Status = p.Status.ToString(),
+                                                    DueDate = p.DueDate,
+                                                    Notes = p.Notes
+                                                }).ToList(),
+                        PointOfContact = ctx.Consultants
+                                            .Where(c => c.SchoolDistricts.Contains(e))
+                                            .Select(c =>
+                                                        new ConsultantListItem_brief
+                                                        {
+                                                            Id = c.Id,
+                                                            Name = c.Name,
+                                                            Category = c.Category.ToString(),
+                                                            Phone = c.Phone,
+                                                            Email = c.Email,
+                                                        }).FirstOrDefault(),
+                    }
+                );
+
                 return query.ToArray();
             }
         }

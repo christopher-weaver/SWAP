@@ -22,6 +22,8 @@ namespace SWAP.Models.SchoolDistrictPOST
 
         public string Email { get; set; }
 
+        public ConsultantListItem_brief PointOfContact { get; set; }
+
         public List<ProjectDisplay_brief> Projects { get; set; }
     }
 }

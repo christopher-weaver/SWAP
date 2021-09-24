@@ -63,8 +63,8 @@
     <Compile Include="ProjectModels\ProjectDisplay.cs" />
     <Compile Include="ProjectModels\ProjectEdit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SchoolDistrictModels\ConsultantListItem_brief.cs" />
-    <Compile Include="SchoolDistrictModels\ProjectDisplay_brief.cs" />
+    <Compile Include="MiscModels\ConsultantListItem_brief.cs" />
+    <Compile Include="MiscModels\ProjectDisplay_brief.cs" />
     <Compile Include="SchoolDistrictModels\SchoolDistrictDelete.cs" />
     <Compile Include="SchoolDistrictModels\SchoolDistrictEdit.cs" />
     <Compile Include="SchoolDistrictModels\SchoolDistrictItem.cs" />

@@ -42,7 +42,7 @@ namespace SWAP.Services.Services
             }
         }
 
-        public IEnumerable<ConsultantListItem> GetConsultants()
+        public IEnumerable<ConsultantListItem> GetAllConsultants()
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -90,6 +90,63 @@ namespace SWAP.Services.Services
                                                                                                     DueDate = p.DueDate,
                                                                                                     Notes = p.Notes
                                                                                                 }).ToList()
+                                                                    }).ToList()
+                                }
+                        );
+
+                return query.ToList();
+            }
+        }
+
+        public IEnumerable<ConsultantListItem> GetConsultant(Guid consultantId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                    ctx
+                        .Consultants
+                        .Where(c => c.Id == consultantId)
+                        .Select(
+                            c =>
+                                new ConsultantListItem
+                                {
+                                    Id = c.Id,
+                                    Name = c.Name,
+                                    Phone = c.Phone,
+                                    Email = c.Email,
+                                    Category = c.Category.ToString(),
+                                    SchoolDistricts = c.SchoolDistricts
+                                                       .Select(d =>
+                                                                    new SchoolDistrictItem
+                                                                    {
+                                                                        Id = d.Id,
+                                                                        DistrictName = d.DistrictName,
+                                                                        DistrictContact = d.DistrictContact,
+                                                                        ContactTitle = d.ContactTitle,
+                                                                        Email = d.Email,
+                                                                        Telephone = d.Telephone,
+                                                                        Projects = d.Projects
+                                                                                    .Select(p =>
+                                                                                                 new ProjectDisplay_brief
+                                                                                                 {
+                                                                                                     Id = p.Id,
+                                                                                                     Category = p.Category.ToString(),
+                                                                                                     Subcategory = p.Subcategory.ToString(),
+                                                                                                     Consultant = ctx.Consultants
+                                                                                                                    .Where(x => x.Id == p.Consultant.Id)
+                                                                                                                    .Select(x =>
+                                                                                                                                new ConsultantListItem_brief
+                                                                                                                                {
+                                                                                                                                    Id = x.Id,
+                                                                                                                                    Name = x.Name,
+                                                                                                                                    Category = x.Category.ToString(),
+                                                                                                                                    Phone = x.Phone,
+                                                                                                                                    Email = x.Email,
+                                                                                                                                }).FirstOrDefault(),
+                                                                                                     Status = p.Status.ToString(),
+                                                                                                     DueDate = p.DueDate,
+                                                                                                     Notes = p.Notes
+                                                                                                 }).ToList()
                                                                     }).ToList()
                                 }
                         );
