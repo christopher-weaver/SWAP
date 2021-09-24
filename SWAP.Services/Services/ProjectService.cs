@@ -62,13 +62,70 @@ namespace SWAP.Services.Services
             }
         }
 
-        public IEnumerable<ProjectDisplay> GetProjects()
+        public IEnumerable<ProjectDisplay> GetAllProjects()
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var query =
                     ctx
                         .Projects
+                        .Select(
+                            p => new ProjectDisplay
+                            {
+                                Id = p.Id,
+                                Category = p.Category.ToString(),
+                                Subcategory = p.Subcategory.ToString(),
+                                Status = p.Status.ToString(),
+                                DueDate = p.DueDate,
+                                Notes = p.Notes,
+                                SchoolDistrict = ctx.SchoolDistricts
+                                                    .Where(d => d.Id == p.SchoolDistrict.Id)
+                                                    .Select(d =>
+                                                                new SchoolDistrictItem
+                                                                {
+                                                                    Id = d.Id,
+                                                                    DistrictName = d.DistrictName,
+                                                                    DistrictContact = d.DistrictContact,
+                                                                    ContactTitle = d.ContactTitle,
+                                                                    Email = d.Email,
+                                                                    Telephone = d.Telephone
+                                                                }).FirstOrDefault(),
+                                Consultant = ctx.Consultants
+                                                    .Where(c => c.Id == p.Consultant.Id)
+                                                    .Select(c =>
+                                                                new ConsultantListItem
+                                                                {
+                                                                    Id = c.Id,
+                                                                    Name = c.Name,
+                                                                    Category = c.Category.ToString(),
+                                                                    Phone = c.Phone,
+                                                                    Email = c.Email,
+                                                                    SchoolDistricts = c.SchoolDistricts
+                                                                                       .Select(d =>
+                                                                                                    new SchoolDistrictItem
+                                                                                                    {
+                                                                                                        Id = d.Id,
+                                                                                                        DistrictName = d.DistrictName,
+                                                                                                        DistrictContact = d.DistrictContact,
+                                                                                                        ContactTitle = d.ContactTitle,
+                                                                                                        Email = d.Email,
+                                                                                                        Telephone = d.Telephone
+                                                                                                    }).ToList()
+                                                                }).FirstOrDefault()
+                            });
+
+                return query.ToArray();
+            }
+        }
+
+        public IEnumerable<ProjectDisplay> GetProject(Guid projectId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                    ctx
+                        .Projects
+                        .Where(p => p.Id == projectId)
                         .Select(
                             p => new ProjectDisplay
                             {

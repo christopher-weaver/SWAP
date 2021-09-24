@@ -18,8 +18,6 @@ namespace SWAP.API.Controllers
             return consultantService;
         }
         
-        
-        
         public IHttpActionResult Post(ConsultantCreate consultant)
         {
             if (!ModelState.IsValid)
@@ -37,7 +35,15 @@ namespace SWAP.API.Controllers
         public IHttpActionResult Get()
         {
             ConsultantService consultantService = CreateConsultantService();
-            var consultants = consultantService.GetConsultants();
+            var consultants = consultantService.GetAllConsultants();
+            return Ok(consultants);
+        }
+
+        [Route("api/Consultant/{consultantId}")]
+        public IHttpActionResult Get([FromUri] Guid consultantId)
+        {
+            ConsultantService consultantService = CreateConsultantService();
+            var consultants = consultantService.GetConsultant(consultantId);
             return Ok(consultants);
         }
 

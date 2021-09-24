@@ -10,6 +10,9 @@ namespace SWAP.Models.Models
     public class ConsultantDelete
     {
         [Required]
-        public Guid Id { get; set; }
+        public Guid IdToDelete { get; set; }
+
+        [Required]
+        public Guid IdToReplace { get; set; }
     }
 }

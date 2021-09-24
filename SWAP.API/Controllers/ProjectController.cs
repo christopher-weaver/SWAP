@@ -39,7 +39,16 @@ namespace SWAP.API.Controllers
         public IHttpActionResult Get()
         {
             ProjectService projectService = CreateProjectService();
-            var projects = projectService.GetProjects();
+            var projects = projectService.GetAllProjects();
+            return Ok(projects);
+        }
+
+        [HttpGet]
+        [Route("api/Project/{projectId}")]
+        public IHttpActionResult Get([FromUri] Guid projectId)
+        {
+            ProjectService projectService = CreateProjectService();
+            var projects = projectService.GetProject(projectId);
             return Ok(projects);
         }
 
